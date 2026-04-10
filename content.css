@@ -1,0 +1,458 @@
+/* ============================================================
+   Highlighter Extension — Content Styles
+   True Dark Mode UI
+   ============================================================ */
+
+:root {
+  --hn-bg-base: #0c0c0e;
+  --hn-bg-panel: #161618;
+  --hn-bg-card: #1c1c1f;
+  --hn-bg-card-hover: #222226;
+  --hn-bg-input: #26262a;
+  --hn-bg-input-hover: #2c2c32;
+  
+  --hn-border: #333338;
+  --hn-border-light: #222226;
+  
+  --hn-text-primary: #f0f0f5;
+  --hn-text-secondary: #9ea0a5;
+  --hn-text-muted: #6b6c72;
+  
+  --hn-accent: #0a84ff;
+  --hn-accent-light: #409cff;
+  --hn-accent-glow: rgba(10, 132, 255, 0.25);
+  
+  --hn-yellow: #FFD60A;
+  --hn-red: #FF453A;
+  --hn-green: #30D158;
+  --hn-blue: #0A84FF;
+  
+  --hn-radius-lg: 16px;
+  --hn-radius: 12px;
+  --hn-radius-sm: 8px;
+  --hn-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --hn-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
+  
+  --hn-font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+}
+
+:root[data-hn-theme="light"] {
+  --hn-bg-base: #f5f5f7;
+  --hn-bg-panel: #ffffff;
+  --hn-bg-card: #ffffff;
+  --hn-bg-card-hover: #f9f9fb;
+  --hn-bg-input: #f2f2f7;
+  --hn-bg-input-hover: #e5e5ea;
+  
+  --hn-border: #d1d1d6;
+  --hn-border-light: #e5e5ea;
+  
+  --hn-text-primary: #1d1d1f;
+  --hn-text-secondary: #86868b;
+  --hn-text-muted: #a1a1a6;
+  
+  --hn-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --hn-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Highlight Mark ───────────────────────────────────────── */
+
+mark.hn-highlight {
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 1px 2px;
+  margin: 0 -2px;
+  transition: filter 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+mark.hn-highlight:hover {
+  filter: brightness(0.9);
+  box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.5);
+  z-index: 10;
+}
+
+mark.hn-highlight.hn-orphaned {
+  opacity: 0.4;
+  text-decoration: line-through;
+  cursor: not-allowed;
+}
+
+/* ── UI Reset ─────────────────────────────────────────────── */
+
+.hn-ui {
+  all: initial;
+  font-family: var(--hn-font) !important;
+  box-sizing: border-box !important;
+}
+
+.hn-ui * {
+  box-sizing: border-box !important;
+  font-family: inherit !important;
+}
+
+/* ── Floating Context Toolbar ──────────────────────────────── */
+
+.hn-floating-toolbar {
+  position: fixed;
+  z-index: 2147483647;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 10px !important;
+  
+  background: var(--hn-bg-panel) !important;
+  border: 1px solid var(--hn-border) !important;
+  box-shadow: var(--hn-shadow) !important;
+  border-radius: 100px !important;
+  
+  animation: hn-fade-in 0.2s ease-out forwards;
+}
+
+.hn-toolbar-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: transparent;
+  color: var(--hn-text-primary);
+  font-size: 15px;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.hn-toolbar-btn:hover {
+  background: var(--hn-bg-input);
+  transform: scale(1.1);
+  color: var(--hn-accent);
+}
+
+.hn-color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--hn-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.hn-color-swatch:hover {
+  transform: scale(1.2);
+  border-color: #fff;
+}
+
+.hn-toolbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--hn-border);
+  margin: 0 4px;
+}
+
+/* ── Note Popup ───────────────────────────────────────────── */
+
+.hn-note-popup {
+  position: fixed;
+  z-index: 2147483647;
+  width: 340px;
+  
+  background: var(--hn-bg-panel);
+  border: 1px solid var(--hn-border);
+  box-shadow: var(--hn-shadow-lg);
+  border-radius: var(--hn-radius-lg);
+  padding: 20px;
+  
+  animation: hn-scale-in 0.2s ease-out forwards;
+}
+
+.hn-note-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.hn-note-popup-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--hn-text-primary);
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.hn-note-popup-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: var(--hn-bg-input);
+  cursor: pointer;
+  color: var(--hn-text-secondary);
+  font-size: 14px;
+  border-radius: 50%;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.hn-note-popup-close:hover {
+  background: var(--hn-bg-input-hover);
+  color: var(--hn-text-primary);
+}
+
+.hn-note-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 12px 14px;
+  border: 1px solid var(--hn-border);
+  border-radius: var(--hn-radius);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--hn-text-primary);
+  background: var(--hn-bg-input);
+  resize: vertical;
+  outline: none;
+  transition: all 0.2s ease;
+  font-family: var(--hn-font) !important;
+  user-select: text !important;
+  pointer-events: auto !important;
+}
+
+.hn-note-textarea:focus {
+  background: var(--hn-bg-input-hover);
+  border-color: var(--hn-accent);
+  box-shadow: 0 0 0 3px var(--hn-accent-glow);
+}
+
+.hn-note-textarea::placeholder {
+  color: var(--hn-text-secondary);
+}
+
+/* Tag Input */
+.hn-tag-section {
+  margin-top: 16px;
+}
+
+.hn-tag-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--hn-text-secondary);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.hn-tag-input-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 10px;
+  border: 1px solid var(--hn-border);
+  border-radius: var(--hn-radius-sm);
+  background: var(--hn-bg-input);
+  min-height: 40px;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.hn-tag-input-wrap:focus-within {
+  background: var(--hn-bg-input-hover);
+  border-color: var(--hn-accent);
+  box-shadow: 0 0 0 3px var(--hn-accent-glow);
+}
+
+.hn-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--hn-text-primary);
+  color: var(--hn-bg-panel);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.hn-tag-pill-remove {
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.6;
+}
+
+.hn-tag-pill-remove:hover {
+  opacity: 1;
+}
+
+.hn-tag-input {
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--hn-text-primary);
+  flex: 1;
+  min-width: 60px;
+  padding: 2px 0;
+  font-family: var(--hn-font) !important;
+  user-select: text !important;
+  pointer-events: auto !important;
+}
+
+.hn-tag-input::placeholder {
+  color: var(--hn-text-secondary);
+}
+
+/* Quick Tags */
+.hn-quick-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.hn-quick-tag {
+  padding: 4px 12px;
+  border: 1px solid var(--hn-border);
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--hn-text-secondary);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hn-quick-tag:hover {
+  background: var(--hn-bg-input);
+  color: var(--hn-text-primary);
+}
+
+.hn-quick-tag.active {
+  background: var(--hn-text-primary);
+  color: var(--hn-bg-panel);
+  border-color: var(--hn-text-primary);
+}
+
+/* Popup Actions */
+.hn-note-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.hn-btn {
+  padding: 10px 20px;
+  border: 1px solid var(--hn-border);
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--hn-font) !important;
+}
+
+.hn-btn-primary {
+  background: var(--hn-text-primary) !important;
+  color: var(--hn-bg-panel) !important;
+  border-color: var(--hn-text-primary) !important;
+  flex: 1;
+}
+
+.hn-btn-primary:hover {
+  opacity: 0.85;
+}
+
+.hn-btn-secondary {
+  background: var(--hn-bg-input);
+  color: var(--hn-text-primary);
+  flex: 1;
+}
+
+.hn-btn-secondary:hover {
+  background: var(--hn-bg-input-hover);
+}
+
+.hn-btn-danger {
+  background: transparent;
+  color: var(--hn-red);
+  border: none;
+  padding: 10px;
+}
+
+.hn-btn-danger:hover {
+  background: rgba(255, 69, 58, 0.1);
+  border-radius: 50%;
+}
+
+/* ── Hover Tooltip ───────────────────────────── */
+
+.hn-tooltip {
+  position: fixed;
+  z-index: 2147483646;
+  max-width: 300px;
+  
+  background: var(--hn-bg-panel);
+  border: 1px solid var(--hn-border);
+  box-shadow: var(--hn-shadow);
+  border-radius: var(--hn-radius);
+  padding: 14px 18px;
+  pointer-events: auto;
+  
+  animation: hn-fade-in 0.2s ease-out forwards;
+}
+
+.hn-tooltip-note {
+  font-size: 14px;
+  color: var(--hn-text-primary);
+  line-height: 1.5;
+  margin: 0;
+  word-break: break-word;
+}
+
+.hn-tooltip-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.hn-tooltip-tag {
+  display: inline-flex;
+  padding: 3px 10px;
+  background: var(--hn-bg-input);
+  color: var(--hn-text-primary);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--hn-border);
+}
+
+/* ── Highlight Snippet Preview ────────────────────────────── */
+
+.hn-selected-text-preview {
+  font-size: 13px;
+  color: var(--hn-text-secondary);
+  background: var(--hn-bg-input);
+  padding: 10px 14px;
+  border-radius: var(--hn-radius-sm);
+  margin-bottom: 16px;
+  border-left: 3px solid var(--hn-accent);
+}
+
+/* ── Animations ───────────────────────────────────────────── */
+
+@keyframes hn-fade-in {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hn-scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}

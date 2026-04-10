@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Highlighter Notes</title>
+  <link rel="stylesheet" href="sidebar.css">
+</head>
+<body>
+  <div class="hn-sidebar">
+
+    <!-- Header -->
+    <div class="hn-sidebar-header">
+      <div class="hn-sidebar-top-row">
+        <div class="hn-sidebar-logo">
+          <span class="hn-sidebar-logo-icon">✏️</span>
+          <h1 class="hn-sidebar-title">Highlighter</h1>
+        </div>
+        <!-- Scope Toggle (Moved to header for space) -->
+        <div class="hn-scope-toggle-mini">
+          <button class="hn-scope-mini-btn active" id="scopeCurrentPage" data-scope="current">Current</button>
+          <button class="hn-scope-mini-btn" id="scopeAllPages" data-scope="all">All</button>
+        </div>
+        <button class="hn-icon-btn" id="settingsToggleBtn" title="Settings">⚙️</button>
+      </div>
+      <div class="hn-sidebar-page-info" id="pageInfo">
+        <span class="hn-page-title" id="pageTitle">Loading…</span>
+      </div>
+    </div>
+
+    <!-- Settings (Hidden by default to save space) -->
+    <div class="hn-settings-panel" id="settingsPanel" style="display: none;">
+      <div class="hn-setting-row">
+        <span class="hn-setting-label">Show highlights</span>
+        <label class="hn-toggle-switch">
+          <input type="checkbox" id="toggleHighlights" checked>
+          <span class="hn-toggle-slider"></span>
+        </label>
+      </div>
+      <div class="hn-setting-row">
+        <span class="hn-setting-label">Default color</span>
+        <div class="hn-color-row" id="colorPicker">
+          <div class="hn-color-option active" data-color="#FFEB3B" style="background: #FFEB3B;" title="Important"></div>
+          <div class="hn-color-option" data-color="#FF8A80" style="background: #FF8A80;" title="Question"></div>
+          <div class="hn-color-option" data-color="#B9F6CA" style="background: #B9F6CA;" title="Agree"></div>
+          <div class="hn-color-option" data-color="#82B1FF" style="background: #82B1FF;" title="Research"></div>
+        </div>
+      </div>
+      <div class="hn-setting-row">
+        <span class="hn-setting-label">Theme</span>
+        <select id="themeSelect" class="hn-theme-select">
+          <option value="dark">Dark</option>
+          <option value="light">Light</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Search -->
+    <div class="hn-search-wrap">
+      <svg class="hn-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input type="text" class="hn-search-input" id="searchInput" placeholder="Search highlights, notes, tags…">
+    </div>
+
+    <!-- Tag Filter -->
+    <div class="hn-tag-filter" id="tagFilter">
+      <!-- tags rendered dynamically -->
+    </div>
+
+    <!-- Sort -->
+    <div class="hn-sort-bar">
+      <span class="hn-sort-label">Sort:</span>
+      <button class="hn-sort-btn active" id="sortNewest" data-sort="newest">Newest</button>
+      <button class="hn-sort-btn" id="sortOldest" data-sort="oldest">Oldest</button>
+      <div class="hn-count" id="highlightCount">0 highlights</div>
+    </div>
+
+    <!-- Highlights List -->
+    <div class="hn-highlights-list" id="highlightsList">
+      <!-- highlight cards go here -->
+    </div>
+
+    <!-- Empty State -->
+    <div class="hn-empty-state" id="emptyState" style="display: none;">
+      <div class="hn-empty-icon">📝</div>
+      <h3 class="hn-empty-title">No highlights yet</h3>
+      <p class="hn-empty-text">Select text on the page and click the highlight button to get started.</p>
+    </div>
+
+    <!-- Quota Warning -->
+    <div class="hn-quota-warning" id="quotaWarning" style="display: none;">
+      ⚠️ Sync storage is almost full. Older highlights may not sync.
+    </div>
+
+    <!-- Divider -->
+    <div class="hn-divider"></div>
+
+    <!-- Actions -->
+    <div class="hn-actions">
+      <button class="hn-action-btn" id="exportBtn">
+        <span class="hn-action-icon">📄</span>
+        Export .md
+      </button>
+      <button class="hn-action-btn" id="copyBtn">
+        <span class="hn-action-icon">📋</span>
+        Copy all
+      </button>
+    </div>
+
+  </div>
+
+  <script src="../utils/storage.js"></script>
+  <script src="sidebar.js"></script>
+</body>
+</html>
