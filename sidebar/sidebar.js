@@ -42,13 +42,27 @@
 
   // ── Initialization ─────────────────────────────────────
 
+  async function updateCurrentTab(tab) {
+    if (!tab) return;
+    currentTabId = tab.id;
+    currentTabUrl = tab.url || '';
+    elements.pageTitle.textContent = tab.title || currentTabUrl || 'Loading…';
+    if (viewScope === 'current') {
+      await loadHighlights();
+    }
+  }
+
   async function init() {
     try {
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      if (tab) {
-        currentTabId = tab.id;
-        currentTabUrl = tab.url;
-        elements.pageTitle.textContent = tab.title || tab.url;
+      let tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+      if (tabs.length === 0) {
+        tabs = await chrome.tabs.query({ active: true, lastFocusedWindow: true });
+      }
+      
+      if (tabs && tabs.length > 0) {
+        currentTabId = tabs[0].id;
+        currentTabUrl = tabs[0].url || '';
+        elements.pageTitle.textContent = tabs[0].title || currentTabUrl || 'Loading…';
       }
     } catch (err) {
       console.warn('[HN Sidebar] Could not get active tab:', err);
@@ -65,6 +79,23 @@
         if (relevantChange) {
           await loadHighlights();
         }
+      }
+    });
+
+    // Listen for tab switches
+    chrome.tabs.onActivated.addListener(async (activeInfo) => {
+      try {
+        const tab = await chrome.tabs.get(activeInfo.tabId);
+        await updateCurrentTab(tab);
+      } catch (err) {
+        console.warn('[HN Sidebar] failed resolving activated tab', err);
+      }
+    });
+
+    // Listen for tab URL/title updates 
+    chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+      if (tabId === currentTabId && (changeInfo.url || changeInfo.title)) {
+        await updateCurrentTab(tab);
       }
     });
   }
