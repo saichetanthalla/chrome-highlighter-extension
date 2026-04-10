@@ -12,7 +12,7 @@ Build a Chrome extension that lets users highlight text on any webpage, attach t
 - Highlight any selected text on a webpage
 - Attach a typed note to each highlight
 - Assign one or more tags to each note (e.g. `#research`, `#todo`, `#question`, `#important`)
-- Persist and sync all highlights + notes via `chrome.storage.sync` — automatically available across all Chrome devices the user is signed into (Mac, iPhone, iPad, etc.)
+- Persist and sync all highlights + notes via `chrome.storage.sync`
 - Auto-restore highlights and notes when the user revisits the same page on any device
 
 ### Phase 2 — Highlighting & Notes UX
@@ -38,7 +38,7 @@ Build a Chrome extension that lets users highlight text on any webpage, attach t
 
 ---
 
-## Add-on: AI Summary (Claude API)
+## Add-on: AI Summary (Claude API) - Next Step
 > Build this only after Phase 1–4 are fully working. It is an optional enhancement, not a dependency of the core product.
 
 - "Summarize this page" button in the sidebar
