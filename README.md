@@ -1,6 +1,6 @@
 # Highlighter — Notes & AI Summary
 
-Youtube Demo Link: https://youtu.be/BRieKfYf2OI
+YouTube Demo Link: https://youtu.be/BRieKfYf2OI
 
 A modern, lightweight Chrome Extension to highlight text, add tagged notes, and manage your research across any webpage.
 
