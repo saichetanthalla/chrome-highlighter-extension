@@ -5,7 +5,7 @@
 
 // ── Context Menu Setup ─────────────────────────────────────
 
-chrome.runtime.onInstalled.addListener(() => {
+chrome.runtime.onInstalled.addListener(async () => {
   chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(() => {});
 
   chrome.contextMenus.create({
@@ -13,6 +13,29 @@ chrome.runtime.onInstalled.addListener(() => {
     title: 'Highlight selection',
     contexts: ['selection']
   });
+
+  // Inject content scripts into existing HTTP/HTTPS tabs
+  try {
+    const tabs = await chrome.tabs.query({ url: ['http://*/*', 'https://*/*'] });
+    for (const tab of tabs) {
+      if (tab.id && !tab.url.startsWith('chrome://') && !tab.url.startsWith('chrome-extension://')) {
+        try {
+          await chrome.scripting.insertCSS({
+            target: { tabId: tab.id },
+            files: ['content.css']
+          });
+          await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ['utils/storage.js', 'utils/highlighter.js', 'content.js']
+          });
+        } catch (err) {
+          // Ignore errors on restricted pages
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[HN BG] Could not query tabs for injection:', err);
+  }
 });
 
 // ── Context Menu Click ─────────────────────────────────────
